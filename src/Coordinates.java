@@ -2,43 +2,51 @@ package Labs;
 
 import java.util.Objects;
 
+/**
+ * Координаты объекта
+ */
 public class Coordinates implements Comparable<Coordinates> {
-   private int x;
-   private Double y;
+    private int x; //Значение поля должно быть больше -985
+    private Double y; //Поле не может быть null
 
-   Coordinates(int x, Double y) {
-      this.x = x;
-      this.y = y;
-   }
+    Coordinates(int x, Double y){
+        this.x = x;
+        this.y = y;
+    }
+    public int getX() {
+        return x;
+    }
+    public Double getY() {
+        return y;
+    }
 
-   public int getX() {
-      return this.x;
-   }
+    @Override
+    public String toString() {
+        return "Coordinates {" +
+                "x:" + x + ", y:" + y +  "} ";
+    }
 
-   public Double getY() {
-      return this.y;
-   }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Coordinates)) return false;
+        Coordinates coordinates = (Coordinates) o;
+        return x == coordinates.getX() &&
+                y.equals(coordinates.getY());
+    }
 
-   public String toString() {
-      return "Coordinates {x:" + this.x + ", y:" + this.y + "} ";
-   }
+    @Override
+    public int hashCode() {
+        return Objects.hash(x,y);
+    }
 
-   public boolean equals(Object o) {
-      if (this == o) {
-         return true;
-      } else if (!(o instanceof Coordinates)) {
-         return false;
-      } else {
-         Coordinates coordinates = (Coordinates)o;
-         return this.x == coordinates.getX() && this.y.equals(coordinates.getY());
-      }
-   }
 
-   public int hashCode() {
-      return Objects.hash(new Object[]{this.x, this.y});
-   }
+    /**
+     * сравнение по координатам по расстоянию от начала координат
+     */
+    @Override
+    public int compareTo(Coordinates o) {
+        return (int) (x*x + y*y - o.getX()*o.getX() - o.getY()*o.getY());
+    }
 
-   public int compareTo(Coordinates o) {
-      return (int)((double)(this.x * this.x) + this.y * this.y - (double)(o.getX() * o.getX()) - o.getY() * o.getY());
-   }
 }
